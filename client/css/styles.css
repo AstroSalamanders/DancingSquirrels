@@ -19,6 +19,12 @@
      background-color: #0c0c0c;
   }
 
+  .userName {
+    color: white;
+    text-decoration: none;
+    padding: 3px;
+  }
+
   .main-container {
     background-color: #0c0c0c
     padding: 40px 0;
@@ -103,6 +109,10 @@
 
 @media screen and ( min-device-width: 1024px ){
 
+  a:hover {
+    text-decoration: none;
+    color: white;
+  }
   html {
     background-color: #0c0c0c;
   }
@@ -118,6 +128,25 @@
     position: relative;
     z-index: 1000;
     transform: translateX(-10px)
+  }
+  
+  .userName {
+    color: white;
+    text-decoration: none;
+    margin-left: 18px;
+    margin-right: 10px;
+  }
+
+  .userName:hover,
+  .userName:focused,
+  .userName:active {
+    color: white;
+    text-decoration: none !important;
+  }
+
+  .userIcon{
+    transform: translateY(7px);
+    margin-left: 10px;
   }
 
   #podcast-main{
