@@ -29,23 +29,23 @@ class App extends React.Component {
     this.state = {
       currentPodcastView: 'Top 10 Podcasts!',
       podcasts: [],
-      categories: ['podcasts',
-                   'arts', 
-                   'comedy',  
-                   'education',  
-                   'kidsFamily', 
-                   'health', 
-                   'tvFilm',  
-                   'music',  
-                   'newsPolitics', 
-                   'religionSpirituality', 
-                   'scienceMedicine', 
-                   'sportsRecreation', 
-                   'technology', 
-                   'business', 
-                   'gamesHobbies', 
-                   'societyCulture', 
-                   'governmentOrganizations'],
+      categories: [['podcasts','Top 10 Podcasts!'],
+                   ['arts', 'Arts'], 
+                   ['comedy', 'Comedy'],  
+                   ['education','Education'],  
+                   ['kidsFamily', 'Kids & Family'], 
+                   ['health', 'Health'], 
+                   ['tvFilm', 'TV & Film'],  
+                   ['music', 'Music'],  
+                   ['newsPolitics', 'News & Politics'], 
+                   ['religionSpirituality', 'Religion & Spirituality'], 
+                   ['scienceMedicine', 'Science & Medicine'], 
+                   ['sportsRecreation', 'Sports & Recreation'], 
+                   ['technology', 'Technology'], 
+                   ['business', 'Business'], 
+                   ['gamesHobbies', 'Games & Hobbies'], 
+                   ['societyCulture', 'Society & Culture'], 
+                   ['governmentOrganizations', 'Government & Organizations']],
       arts: [],
       comedy: [],
       education: [],
@@ -340,6 +340,7 @@ class App extends React.Component {
                                       onSearch={this.onSearch}
                                       podcasts={this.state.podcasts}
                                       categories={this.state.categories}
+                                      categoryName={this.state.categoryName}
                                       arts={this.state.arts}
                                       comedy={this.state.comedy}
                                       education={this.state.education}

@@ -59,8 +59,8 @@ class UserHomePage extends React.Component {
         
         {this.props.categories.map((category) => 
           <PodcastList
-            podcasts={ this.props[category] }
-            category = {category}
+            podcasts={ this.props[category[0]] }
+            category = {category[1]}
             onClickPodcast={this.props.onClickPodcast } 
             currentPodcastView={this.props.currentPodcastView}
             loggedIn={ this.props.loggedIn } />              
