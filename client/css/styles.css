@@ -148,7 +148,10 @@
     background-color: #0c0c0c;
   }
   
-  .toolBarTitle, .toolBarTitle:hover, .toolBarTitle:active, .toolBarTitle:focus {
+  .toolBarTitle, 
+  .toolBarTitle:hover, 
+  .toolBarTitle:active, 
+  .toolBarTitle:focus {
     text-decoration: none !important;
   }
 
