@@ -1,6 +1,7 @@
 const express = require('express');
 const UserModel = require('../../db/models/User.js');
 const UserPodcastModel = require('../../db/models/User_Podcast.js');
+const UserEpisodesModel = require('../../db/models/UserEpisodes.js');
 const UserFavoritePodcastModel = require('../../db/models/User_Favorite_Podcast.js');
 const verifySession = require('../../db/models/VerifySession.js').verifySession;
 const ReviewModel = require('../../db/models/Review.js');
@@ -23,7 +24,6 @@ const router = express.Router();
 
 router.route('/logout')
   .get((req, res) => {
-    console.log('--------------------log out----------------:');
     sessionHelpers.store.destroy(req.sessionID);
     req.session.destroy();
     res.redirect('/');
@@ -59,7 +59,7 @@ router.route('/favorite')
   .get((req, res) => {
     //console.log('testing cookie', req.query.username)
     verifySession(req.sessionID, function(dbUserName){
-      console.log('testing cookie ids', req.query.username, dbUserName)
+      //console.log('testing cookie ids', req.query.username, dbUserName)
       if(dbUserName === req.query.username){
         UserModel.fetch(req.query.username, (result) => {
           // console.log('favorite: ', result);
@@ -110,7 +110,7 @@ router.route('/signup')
 
 router.route('/search')
   .post((req, res) => {
-    console.log('------------Search Query-----------:', req.body.search);
+    //console.log('------------Search Query-----------:', req.body.search);
     let url = `https://itunes.apple.com/search?term=${req.body.search}&country=US&entity=podcast&media=podcast&limit=10`;
     utils.fetchCollections(url, (err, results) => {
       if (results) {
@@ -351,7 +351,7 @@ router.route('/search-rating')
 
 router.route('/addRating')
  .post((req, res) => {
-   console.log(req.sessionID);
+   //console.log(req.sessionID);
    UserModel.fetch(req.body.username, (result) => {
     var dataToInsert = {
       podcast_id: req.body.collectionId,
@@ -383,6 +383,7 @@ router.route('/get-reviews')
 router.route('/post-review')
  .post((req, res) => {
    UserModel.fetch(req.body.username, (result) => {
+    console.log('post review result', result)
     var dataToInsert = {
       podcast_id: req.body.collectionId,
        summary: req.body.summary,
@@ -403,12 +404,58 @@ router.route('/post-review')
 
 router.route('/getUser')
   .get((req, res) => {
+    console.log('get user', req.session.passport, req.session.passport.user)
     if (req.session.passport && req.session.passport.user) {
       res.send({ user: req.session.passport.user });
     } else {
       res.send({ user: '' });
     }
   });
+
+router.route('/played')
+  .get((req, res) => {
+    // if database fetch time has result, return result time to client
+    // if database fetch time does not have result, return 0 to client, add entry to server
+    UserModel.fetch(req.query.username, (result) => {
+    //console.log('played username result', result)
+    var dataToInsert = {
+       user_id: result.id,
+       episode_id: req.query.episode_id
+      };
+     UserEpisodesModel.fetchTime(dataToInsert, results => {
+       //console.log(results);
+       if (results) {
+        console.log(results)
+         res.status(200).send(results);
+       } else {
+         res.status(404).send('error');
+       }
+     });
+   });
+  })
+
+router.route('/played')
+    // send update time to database
+ .post((req, res) => {
+  //console.log('req.body.username', req.body.username)
+   UserModel.fetch(req.body.username, (result) => {
+    //console.log('played username result', result)
+    var dataToInsert = {
+       user_id: result.id,
+       episode_id: req.body.episode_id,
+       time: req.body.time
+      };
+      //console.log(dataToInsert)
+     UserEpisodesModel.insertTime(dataToInsert, results => {
+       //console.log(results);
+       if (results) {
+         res.status(200).send('success');
+       } else {
+         res.status(404).send('error');
+       }
+     });
+   });
+ });
 
 router.route('/login')
   .get((req, res) => {
@@ -418,7 +465,7 @@ router.route('/login')
 router.route('/*')
   .get((req, res) => {
     verifySession(req.sessionID, function(dbUserName){
-      console.log('testing cookie ids', req.url.substring(1), dbUserName, req.sessionID);
+      //console.log('testing cookie ids', req.url.substring(1), dbUserName, req.sessionID);
       if(dbUserName === req.url.substring(1)){
         res.status(200).sendFile(path.join(__dirname + '/../../client/index.html'));
       }
@@ -426,7 +473,7 @@ router.route('/*')
         res.redirect('/login');
       }
     })
-    console.log('*********** star route **********');
+    //console.log('*********** star route **********');
   })
 
 

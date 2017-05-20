@@ -150,8 +150,8 @@ class App extends React.Component {
         this.setState({
           podcastEpisodes: podcastEpisodes[0],
         });
-        console.log('podcastEpisodes: ', this.state.podcastEpisodes);
-        console.log('podcasts: ', this.state.podcasts);
+        //console.log('podcastEpisodes: ', this.state.podcastEpisodes);
+        //console.log('podcasts: ', this.state.podcasts);
         callback();
       });
   }
