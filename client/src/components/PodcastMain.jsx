@@ -13,8 +13,8 @@ const PodcastMain = (props) => {
         return (
 
         <PodcastList
-          podcasts={ props[category] }
-          category = {category}
+          podcasts={ props[category[0]] }
+          category = {category[1]}
           onClickPodcast={props.onClickPodcast } 
           currentPodcastView={props.currentPodcastView}
           loggedIn={ props.loggedIn } />
