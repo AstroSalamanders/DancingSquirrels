@@ -75,7 +75,7 @@ class App extends React.Component {
     this.updateLoggedIn = this.updateLoggedIn.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.updateLoggedIn();
   }
 
@@ -332,7 +332,7 @@ class App extends React.Component {
                 logoutUser={this.logoutUser}
                 currentPodcastView={this.currentPodcastView}
                 onMenuClick={this.onMenuClick}
-                loggedIn = { this.state.loggedIn} />
+                loggedIn = {this.state.loggedIn} />
         <Switch>
           <Route name="root"
                  exact path="/"
