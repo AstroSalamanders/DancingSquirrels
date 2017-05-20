@@ -63,15 +63,13 @@ class Search extends React.Component {
   onSearch(event) {
     if (event.charCode === 13) {
       setTimeout(() => {
+        this.props.currentPodcastView('Search Results');
+      })
+      setTimeout(() => {
         console.log('Search Query from component enter: ',this._query)
         this.props.onSearch(this._query);
         this.props.currentPodcastView('Search Results');
       }, 0);
-    }
-    else {
-      // setTimeout(() => {
-        this.props.currentPodcastView('Top 10 Podcasts!');
-      // }, 0);
     }
   }
 
