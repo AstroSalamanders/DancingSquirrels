@@ -64,7 +64,7 @@ class Search extends React.Component {
     if (event.charCode === 13) {
       setTimeout(() => {
         this.props.currentPodcastView('Search Results');
-      })
+      }, 0)
       setTimeout(() => {
         console.log('Search Query from component enter: ',this._query)
         this.props.onSearch(this._query);
