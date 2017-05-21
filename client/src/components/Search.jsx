@@ -210,14 +210,14 @@ class Search extends React.Component {
 
           { !this.props.loggedIn ?
             (<Link to='/login'>
-              <FlatButton className="toolbarBtn"
+              <FlatButton className="loginBtn toolbarBtn"
                           label="Login" 
                           style={{ color: 'white' }}/>
             </Link>) 
             :
-            (<Link to={'/' + this.props.loggedIn}>
-              Hi, {this.props.loggedIn}
-              <AccountBox color="white"/>
+            (<Link className="userName" to={'/' + this.props.loggedIn}>
+                Hi, {this.props.loggedIn}
+              <AccountBox className="userIcon" color="white"/>
             </Link>)}
 
           </ToolbarGroup>

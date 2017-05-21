@@ -30,14 +30,16 @@ const Login = () => {
 
          <MUI> 
 
-          <div >
+          <div className="loginBtnContainer" >
 
             <Link to="/loginLocal" className='header-link'>
-              <FlatButton className="toolbarBtn"
+              <FlatButton className="flatBtn toolbarBtn"
                           label="Login" 
                           style={{ color: 'white' }}/>
             </Link>
-
+           <span className="onlyMobile">
+            <br/>
+            </span>
 
             <Link to="/signup" className='header-link'>
               <FlatButton className="toolbarBtn"

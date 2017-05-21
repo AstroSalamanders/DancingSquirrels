@@ -73,13 +73,18 @@ class UserHomePage extends React.Component {
           onClickPodcast={this.props.onClickPodcast}
           loggedIn={this.props.loggedIn} /> 
 
-        {/*<h2 className='podcast-results'>Other Podcasts</h2>
+        {/*
 
-        <PodcastList
-          podcasts={this.props.podcasts}
-          onClickPodcast={this.props.onClickPodcast }
-          getFavPodcasts={this.getFavorites}
-          loggedIn={this.props.loggedIn}/>*/}
+          <h2 className='podcast-results'>Other Podcasts</h2>
+
+          <PodcastList
+            podcasts={this.props.podcasts}
+            onClickPodcast={this.props.onClickPodcast }
+            getFavPodcasts={this.getFavorites}
+            loggedIn={this.props.loggedIn}/>
+
+        */}
+        
       </div>
     )
   }

@@ -1,6 +1,5 @@
-
-@media screen and ( min-device-width: 1024px ){
-
+@media screen, handheld and (max-device-width: 420px) {
+  
   a:hover {
     text-decoration: none;
     color: white;
@@ -11,13 +10,13 @@
   }
 
   body {
-    position: relative;
+    /*position: relative;*/
     width: 100%;
   }
 
   .asLogo {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     position: relative;
     /*z-index: 1000;*/
     transform: translateX(-10px)
@@ -28,7 +27,7 @@
     text-decoration: none;
     margin-left: 18px;
     margin-right: 10px;
-    font-size: 18px !important;
+    font-size: 24px;
   }
 
   .userName:hover,
@@ -39,26 +38,35 @@
   }
 
   .userIcon{
-    transform: translateY(5px);
+    transform: translateY(7px);
     margin-left: 10px;
-    max-width: 25px !important;
-    max-height: 25px !important;
+    width: 35px !important;
+    height: 35px !important;
+    max-width: 35px;
+    max-height: 35px;
+  }
+
+  .loginBtn{
+    font-size: 12px;
+    margin: 0 0 0 20px !important;
+    /*margin-left: 20px;*/
+
   }
 
   #podcast-main{
     background-color: #0c0c0c;
   }
-
+  
   .toolbarBtn {
-    transform: scale(1) !important;
+    transform: scale(2);
   }
 
   .toolbar {
-      height: 80px;
-     /*background-color: #F50057; */
-     background-color: #0c0c0c !important;
+    /*border: 1px solid yellow;*/
+    /*height: 80px;*/
+    background-color: #0c0c0c !important;
   }
-  
+
   #searchField {
     color: white !important;
     font-weight: 200 !important;
@@ -67,22 +75,29 @@
   }
 
   .main-container {
-    
-    padding: 30px 0;
+    background-color: #0c0c0c
+    padding: 40px 0;
     border: 1px solid black;
-    background-color: #0c0c0c;
   }
-  
+
   .toolBarTitle, 
   .toolBarTitle:hover, 
   .toolBarTitle:active, 
   .toolBarTitle:focus {
     text-decoration: none !important;
-    text-decoration: none !important;
     padding-right: 16px !important;
     line-height: 31px !important;
     font-size: 21px !important;
-    margin-left: 10px !important;
+    margin-left: 22px !important;
+    /* transform: translateY(5px); */
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: white;
+    letter-spacing: 2px;
+
   }
 
   .podRow {
@@ -159,8 +174,94 @@
     color: white !important;
   }
 
-  /* Pocast Description */
+  
 
+  /* Login */
+  
+  .loginBtnContainer{
+    /*outline: 1px solid orange;*/
+    width: 200px;
+    margin: 0 auto;
+  }
+
+  .flatBtn{
+    /*outline: 1px solid yellow;*/
+    margin: 20px 10px !important;
+    /*float: left;*/
+    /*display: block !important;*/
+  }
+
+  .onlyMobile {
+    display: block;
+  }
+
+  .header-link{
+    font-family: sans-serif;
+    color: white;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  /*.login {
+    font-family: monospace;
+    font: bold 11px;
+    background-color: crimson;
+    color: #ffffff;
+    padding: 2px 6px 2px 6px;
+    font-size: 20px;
+    width: 300px;
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 10px;
+  }*/
+
+  .loginContainer{
+    /*outline: 1px solid green;*/
+    height: 900px;
+    display: block;
+  }
+
+  .loginForms {
+    color: white;
+    font-weight: 200 !important;
+    letter-spacing: 1px;
+    padding: 15%;
+    width: 100%;
+    /*border: 1px solid yellow;*/
+    text-align: center;
+    height: 100%;
+}
+
+.loginForms input{
+  color: #333;
+}
+
+  .loginSubmit {
+    /*background-color: crimson;*/
+    font: bold;
+    color: #ffffff;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 110px;
+    border-radius: 5px;
+    width: 280px;
+    margin-top: 10px;
+    height: 40px;
+  }
+
+  .loginLabel {
+    margin: 10px;
+    width: 100px;
+  }
+
+  .authButtons {
+    margin-bottom: 10px;
+  }
+  
   .podcast-description {
     float: left;
     margin-right: 2%;
@@ -264,6 +365,7 @@
 
   .addReviewContainer{
     /*outline: 1px solid red;*/
+    padding-top: 50px;
     width: 500px;
     color: #ccc;
     margin-left: 40px;
@@ -512,5 +614,6 @@
   .authButtons {
     margin-bottom: 10px;
   }
+
 
 }
