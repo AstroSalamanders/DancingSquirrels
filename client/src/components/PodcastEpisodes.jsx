@@ -100,47 +100,74 @@ class PodcastEpisodes extends React.Component {
   render() {
 
     return (
+
       <div className='podcast-episodes'>
+
         <div className='podcast-description'>
-          <img src={this.props.podcastEpisodes.image} height='200px' width='200px' />
+
+          <img src={this.props.podcastEpisodes.image} 
+               height='200px' 
+               width='200px' />
+
           <h2>{this.props.podcastEpisodes.title}</h2>
           <p>{this.props.podcastEpisodes.description}</p>
+
           <div className='ratingcontainer'>
-              <div className='viewrating'><ViewRating rating={this.state.rating}/></div>
-              <div className='numreviews'>{this.state.noofreviews} reviews</div>
-              <div className='addrating'><Rating collectionId={this.props.podcastEpisodes.collectionId}/></div>
+              <div className='viewrating'>
+                <ViewRating rating={this.state.rating}/>
+              </div>
+              <div className='numreviews'>
+                {this.state.noofreviews} reviews
+              </div>
+              <div className='addrating'>
+                <Rating collectionId={this.props.podcastEpisodes.collectionId}/>
+              </div>
             </div>
+
         </div>
-        {this.props.podcastEpisodes.episodes.map((episode, itr) => {
-          return (
-            <div key={itr} className='podcast-episode'>
-              <h4>{episode.title}</h4>
-              <ReactAudioPlayer 
-                src={episode.url}
-                controls={true}
-                preload="none"
-                listenInterval={1000}
-                onPause={(e)=>{this.updateTime(e.target.currentTime)}}
-                onPlay={(e)=>{this.getTime(e)}}
-                //onPlay={(e)=>{this.getTime($(e.target).parent().index(), e.target.currentTime)}}
-                onListen={(e)=>{this.updateTime(e)}}
-              />
 
-            </div>
-          );
-        })}
+        <div className="episodeDivider"></div>
 
-        <h3>User Reviews</h3>
+        <div className='episodesContainer'>
+        
+          {this.props.podcastEpisodes.episodes.map((episode, itr) => {
+            
+            return (
+              <div key={itr} className='podcast-episode'>
+                <h4 className="episodeTitle">{episode.title}</h4>
+                <ReactAudioPlayer 
+                  className="episodePlayer"
+                  src={episode.url}
+                  controls={true}
+                  preload="none"
+                  listenInterval={1000}
+                  onPause={(e)=>{this.updateTime(e.target.currentTime)}}
+                  onPlay={(e)=>{this.getTime(e)}}
+                  //onPlay={(e)=>{this.getTime($(e.target).parent().index(), e.target.currentTime)}}
+                  onListen={(e)=>{this.updateTime(e)}}
+                />
 
-        <WriteReview 
-          collectionId={this.props.podcastEpisodes.collectionId} 
-          refreshReview={this.displayRefreshOnReviewSubmit.bind(this)}
-        />
+              </div>
+            );
+          })}
 
-        <DisplayReview 
-          collectionId={this.props.podcastEpisodes.collectionId} 
-          ref={instance => { this.child = instance; }} 
-        />
+        </div>
+
+        <div className="addReviewContainer">
+
+          <h3>User Reviews</h3>
+
+          <WriteReview 
+            collectionId={this.props.podcastEpisodes.collectionId} 
+            refreshReview={this.displayRefreshOnReviewSubmit.bind(this)}
+          />
+
+          <DisplayReview 
+            collectionId={this.props.podcastEpisodes.collectionId} 
+            ref={instance => { this.child = instance; }} 
+          />
+
+        </div>
         
       </div>
 
