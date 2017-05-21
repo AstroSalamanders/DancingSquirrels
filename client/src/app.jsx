@@ -63,6 +63,7 @@ class App extends React.Component {
       societyCulture: [],
       governmentOrganizations: [],
       podcastEpisodes: {},
+      favPodcasts: [],
       loggedIn: ''
     };
 
@@ -73,20 +74,60 @@ class App extends React.Component {
     this.logoutUser = this.logoutUser.bind(this);
     this.onMenuClick = this.onMenuClick.bind(this);
     this.updateLoggedIn = this.updateLoggedIn.bind(this);
+    this.getFavorites = this.getFavorites.bind(this);
+    this.onFavorite = this.onFavorite.bind(this);
   }
 
   componentWillMount() {
     this.updateLoggedIn();
   }
 
+  onFavorite(podcast) {
+    console.log("Adding to Fav!", podcast);
+    $.post('/favorite', {
+      username: this.state.loggedIn,
+      feedUrl: podcast.feedUrl,
+      collectionId: podcast.collectionId,
+      artworkUrl100: podcast.artworkUrl100,
+      artworkUrl600: podcast.artworkUrl600,
+      collectionName: podcast.collectionName,
+      artistName: podcast.artistName
+    })
+      .done(result => {
+        console.log("DONE FAV, result: ", result)
+        this.getFavorites();
+      });
+  }
+  
+  getFavorites() {
+    $.get('/favorite', {
+      username: this.state.loggedIn
+    })
+      .done((result) => {
+        // console.log("Favorites received:",result)
+        // console.log("Fav in State: ", this.state.favPodcasts);
+        // console.log("Are they equal? : ", JSON.stringify(this.state.favPodcasts) === JSON.stringify(result));
+        if (JSON.stringify(this.state.favPodcasts) !== JSON.stringify(result)) {
+          this.setState({
+            favPodcasts: result
+          });
+        }
+      });
+  }
+
   updateLoggedIn(){
     $.get('/getUser')
       .done((results) => {
-        this.setState({ loggedIn: results.user });
         console.log('----> UPDATE USER NAME:', results.user);
-        console.log('current url: ', window.location.pathname, this.state.loggedIn);
+        // console.log('----> State loggedIn:', this.state.loggedIn);
+        // console.log('----> Are they equal? ', this.state.loggedIn === results.user);
+        if (this.state.loggedIn !== results.user) {
+          this.setState({ loggedIn: results.user });
+        }
+        // console.log('current url: ', window.location.pathname);
         if (window.location.pathname === '/' || window.location.pathname === '/' + this.state.loggedIn) {
           this.getHomePage();
+          this.updateRatings();
         }
       })    
   }
@@ -156,154 +197,167 @@ class App extends React.Component {
       });
   }
 
+
   getHomePage() {
 
     $.get('/topTen')
       .done((results) => {
-        this.setState({
-          podcasts: results
-        });
-        this.updateRatings();
+        if (JSON.stringify(results) !== JSON.stringify(this.state.podcasts)) {
+          this.setState({
+            podcasts: results
+          });
+        }
       });
 
       $.post('/arts', { genreID: 1301 })
         .done((results) => {
-          this.setState({
-            arts: results
-          });
-          console.log('-----ART STATE-----', this.state.arts)
-          this.updateRatings();
+          if (JSON.stringify(results) !== JSON.stringify(this.state.arts)) {
+            this.setState({
+              arts: results
+            });
+          }
+          // console.log('-----ART STATE-----', this.state.arts)
       });
 
       $.post('/comedy', { genreID: 1303 })
         .done((results) => {
-          this.setState({
-            comedy: results
-          });
-          console.log('-----COMEDY STATE-----', this.state.comedy)
-          this.updateRatings();
+          if (JSON.stringify(results) !== JSON.stringify(this.state.comedy)) {
+            this.setState({
+              comedy: results
+            });
+          }
+          // console.log('-----COMEDY STATE-----', this.state.comedy)
       });
 
       $.post('/education', { genreID: 1304 })
         .done((results) => {
-          this.setState({
-            education: results
-          });
-          console.log('-----EDUCATION STATE-----', this.state.education)
-          this.updateRatings();
+          if (JSON.stringify(results) !== JSON.stringify(this.state.education)) {
+            this.setState({
+              education: results
+            });
+          }
+          // console.log('-----EDUCATION STATE-----', this.state.education)
       });
 
       $.post('/kidsFamily', { genreID: 1303 })
         .done((results) => {
-          this.setState({
-            kidsFamily: results
-          });
-          console.log('-----KIDSFAMILY STATE-----', this.state.kidsFamily)
-          this.updateRatings();
+          if (JSON.stringify(results) !== JSON.stringify(this.state.kidsFamily)) {
+            this.setState({
+              kidsFamily: results
+            });
+          }
+          // console.log('-----KIDSFAMILY STATE-----', this.state.kidsFamily)
       });
 
       $.post('/health', { genreID: 1301 })
         .done((results) => {
-          this.setState({
-            health: results
-          });
-          console.log('-----HEALTH STATE-----', this.state.health)
-          this.updateRatings();
+          if (JSON.stringify(results) !== JSON.stringify(this.state.health)) {
+            this.setState({
+              health: results
+            });
+          }
+          // console.log('-----HEALTH STATE-----', this.state.health)
       });
 
       $.post('/tvFilm', { genreID: 1309 })
         .done((results) => {
-          this.setState({
-            tvFilm: results
-          });
-          console.log('-----tvFilm STATE-----', this.state.tvFilm)
-          this.updateRatings();
+          if (JSON.stringify(results) !== JSON.stringify(this.state.tvFilm)) {
+            this.setState({
+              tvFilm: results
+            });
+          } 
+          // console.log('-----tvFilm STATE-----', this.state.tvFilm)
       });
 
       $.post('/music', { genreID: 1310 })
         .done((results) => {
-          this.setState({
-            music: results
-          });
-          console.log('-----ART STATE-----', this.state.music)
-          this.updateRatings();
+          if (JSON.stringify(results) !== JSON.stringify(this.state.music)) {
+            this.setState({
+              music: results
+            });
+          }
+          // console.log('-----ART STATE-----', this.state.music)
       });
 
       $.post('/newsPolitics', { genreID: 1311 })
         .done((results) => {
-          this.setState({
-            newsPolitics: results
-          });
-    
-          this.updateRatings();
+          if (JSON.stringify(results) !== JSON.stringify(this.state.newsPolitics)) {
+            this.setState({
+              newsPolitics: results
+            });
+          } 
       });
 
       $.post('/religionSpirituality', { genreID: 1314 })
         .done((results) => {
-          this.setState({
-            religionSpirituality: results
-          });
-          this.updateRatings();
+          if (JSON.stringify(results) !== JSON.stringify(this.state.religionSpirituality)) {
+            this.setState({
+              religionSpirituality: results
+            });
+          }
       });
 
       $.post('/scienceMedicine', { genreID: 1315 })
         .done((results) => {
-          this.setState({
-            scienceMedicine: results
-          });
-    
-          this.updateRatings();
+          if (JSON.stringify(results) !== JSON.stringify(this.state.scienceMedicine)) {
+            this.setState({
+              scienceMedicine: results
+            });
+          }
       });
 
       $.post('/sportsRecreation', { genreID: 1316 })
         .done((results) => {
-          this.setState({
-            sportsRecreation: results
-          });
-          this.updateRatings();
+          if (JSON.stringify(results) !== JSON.stringify(this.state.sportsRecreation)) {
+            this.setState({
+              sportsRecreation: results
+            });
+          }
       });
 
       $.post('/technology', { genreID: 1318 })
         .done((results) => {
-          this.setState({
-            technology: results
-          });
-    
-          this.updateRatings();
+          if (JSON.stringify(results) !== JSON.stringify(this.state.technology)) {
+            this.setState({
+              technology: results
+            });
+          }
       });
 
       $.post('/business', { genreID: 1321 })
         .done((results) => {
-          this.setState({
-            business: results
-          });
-          this.updateRatings();
+          if (JSON.stringify(results) !== JSON.stringify(this.state.business)) {
+            this.setState({
+              business: results
+            });
+          }
       });
 
       $.post('/gamesHobbies', { genreID: 1323 })
         .done((results) => {
-          this.setState({
-            gamesHobbies: results
-          });
-    
-          this.updateRatings();
+          if (JSON.stringify(results) !== JSON.stringify(this.state.gamesHobbies)) {
+            this.setState({
+              gamesHobbies: results
+            });
+          }
       });
 
       $.post('/societyCulture', { genreID: 1324 })
         .done((results) => {
-          this.setState({
-            societyCulture: results
-          });
-          this.updateRatings();
+          if (JSON.stringify(results) !== JSON.stringify(this.state.societyCulture)) {
+            this.setState({
+              societyCulture: results
+            });
+          }
       });
 
       $.post('/governmentOrganizations', { genreID: 1325 })
         .done((results) => {
-          this.setState({
-            governmentOrganizations: results
-          });
-    
-          this.updateRatings();
+          if (JSON.stringify(results) !== JSON.stringify(this.state.governmentOrganizations)) {
+            this.setState({
+              governmentOrganizations: results
+            });
+          }
       });
       
   }
@@ -360,7 +414,10 @@ class App extends React.Component {
                                       onClickPodcast={this.onClickPodcast}
                                       currentPodcastView={this.state.currentPodcastView}
                                       onMenuClick={this.onMenuClick}
-                                      loggedIn={this.state.loggedIn} />)} />
+                                      loggedIn={this.state.loggedIn}
+                                      getFavorites={this.getFavorites}
+                                      onFavorite={this.onFavorite} 
+                                      favPodcasts={this.state.favPodcasts}/>)} />
           {/*<Route path="/loginLocal" 
                  render={() => (
                    this.state.loggedIn ? (
@@ -417,7 +474,10 @@ class App extends React.Component {
                                       onClickPodcast={this.onClickPodcast}
                                       currentPodcastView={this.state.currentPodcastView}
                                       onMenuClick={this.onMenuClick} 
-                                      loggedIn={this.state.loggedIn} /> )} />
+                                      loggedIn={this.state.loggedIn}
+                                      getFavorites={this.getFavorites}
+                                      onFavorite={this.onFavorite}
+                                      favPodcasts={this.state.favPodcasts} /> )} />
           <Route
             path="/:username"
             component={() => (<UserHomePage
@@ -443,7 +503,10 @@ class App extends React.Component {
                                 societyCulture={this.state.societyCulture}
                                 governmentOrganizations={this.state.governmentOrganizations}
                                 onClickPodcast={this.onClickPodcast}
-                                onMenuClick={this.onMenuClick}/> )} />
+                                onMenuClick={this.onMenuClick}
+                                getFavorites={this.getFavorites}
+                                onFavorite={this.onFavorite}
+                                favPodcasts={this.state.favPodcasts}/> )} />
 
           </Switch>
         </div>

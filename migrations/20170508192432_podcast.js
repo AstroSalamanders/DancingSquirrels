@@ -75,6 +75,7 @@ exports.up = function(knex, Promise) {
       table.string('feedUrl');
       table.string('collectionId').unique();
       table.string('artworkUrl100');
+      table.string('artworkUrl600');
       table.string('collectionName');
       table.string('artistName');
     }),

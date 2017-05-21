@@ -14,28 +14,8 @@ class PodcastList extends React.Component {
   constructor(props) {
     super(props);
 
-    let hrefArr = window.location.href.split('/');
-    this.username = hrefArr[hrefArr.length - 1];
+    this.username = window.location.pathname.substr(1);
     this.onClickPodcast = this.onClickPodcast.bind(this);
-
-    this.onFavorite = this.onFavorite.bind(this);
-  }
-
-  onFavorite(podcast) {
-    console.log("Adding to Fav!", podcast);
-    $.post('/favorite', {
-      username: this.username,
-      feedUrl: podcast.feedUrl,
-      collectionId: podcast.collectionId,
-      artworkUrl100: podcast.artworkUrl100,
-      artworkUrl600: podcast.artworkUrl600,
-      collectionName: podcast.collectionName,
-      artistName: podcast.artistName
-    })
-      .done((result) => {
-        console.log("DONE FAV, res",result)
-        this.props.getFavPodcasts();
-      });
   }
 
   onClickPodcast(podcast) {
@@ -51,7 +31,7 @@ class PodcastList extends React.Component {
   render() {
 
     return (
-      <div>
+      
       <div className="podRow">
 
         <h3 className='podcast-results'>
@@ -65,6 +45,7 @@ class PodcastList extends React.Component {
             this.props.podcasts.map( (podcast, itr) => {
               return (<PodcastListEntry 
                         key={ itr }
+                        onFavorite={this.props.onFavorite}
                         podcast={podcast}
                         onClickPodcast={ () => this.onClickPodcast(podcast)}
                         loggedIn={ this.props.loggedIn }  
@@ -76,7 +57,7 @@ class PodcastList extends React.Component {
           </div>
         </div>
       </div>
-      </div>
+      
     )
   }
 }
@@ -196,7 +177,7 @@ class PodcastList extends React.Component {
 PodcastList.propTypes = {
   podcasts: PropTypes.array.isRequired,
   onClickPodcast: PropTypes.func.isRequired,
-  getFavPodcasts: PropTypes.func,
+  getFavorites: PropTypes.func,
   loggedIn: PropTypes.string
 };
 
