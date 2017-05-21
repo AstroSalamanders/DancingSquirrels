@@ -16,12 +16,6 @@ const Promise = require('bluebird');
 const path = require('path');
 const router = express.Router();
 
-// router.route('/')
-//   .get((req, res) => {
-//     console.log(":::::::::::::::THIS SHOUDNT SHOW:::::::::::::");
-//     res.status(200).sendFile('/index.html');
-//   });
-
 router.route('/logout')
   .get((req, res) => {
     sessionHelpers.store.destroy(req.sessionID);
@@ -65,7 +59,7 @@ router.route('/favorite')
           // console.log('favorite: ', result);
           UserFavoritePodcastModel.fetchFavoritePodcasts(result.id, (data) => {
             // console.log('data', data);
-            console.log('testing cookie data')
+            // console.log('testing cookie data')
             res.send(data);
           });
         });
@@ -75,14 +69,17 @@ router.route('/favorite')
 
 router.route('/favorite')
   .post((req, res) => {
+    console.log(req.body.username);
     verifySession(req.sessionID, function(dbUserName){
       if(dbUserName === req.body.username){
+        console.log('fav success');
         UserModel.fetch(req.body.username, (result) => {
           let options = {
             user_id: result.id,
             feedUrl: req.body.feedUrl,
             collectionId: req.body.collectionId,
             artworkUrl100: req.body.artworkUrl100,
+            artworkUrl600: req.body.artworkUrl600,
             collectionName: req.body.collectionName,
             artistName: req.body.artistName
           };
@@ -92,6 +89,7 @@ router.route('/favorite')
           });
         });
       } else {
+        console.log('fav fail');
         res.status(404).send()
       }
     })
@@ -472,7 +470,6 @@ router.route('/*')
         res.redirect('/login');
       }
     })
-    //console.log('*********** star route **********');
   })
 
 

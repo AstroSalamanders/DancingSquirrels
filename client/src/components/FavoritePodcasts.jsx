@@ -9,8 +9,8 @@ class FavoritePodcasts extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    this.props.getFavPodcasts();
+  componentDidUpdate() {
+    console.log('FAV POD COMPONENT: ', this.props.favPodcasts);
   }
 
   onDelete(podcast) {
@@ -19,45 +19,47 @@ class FavoritePodcasts extends React.Component {
       method: 'DELETE'
     })
       .done((result) => {
-        this.props.getFavPodcasts();
+        // because its hard to find the where do we get the getFavorites when click
+        if (this.props && this.props.getFavorites) {
+          this.props.getFavorites();
+        }
+        else if(this.getFavorites) {
+          this.getFavorites();
+        }
       });
   }
 
   render() {
     return (
-      <div>
-        {
-          this.props.favPodcasts.length > 0
-          ?
-          <div>
-            <h2 className='podcast-results'>My Favorites</h2>
-              <div className='podcast-wrapper'>
-                  {
-                    this.props.favPodcasts.map((podcast, itr) => {
-                      return (
-                        <div key={itr}>
-                          <PodcastListEntry
-                          key={itr}
-                          podcast={podcast}
-                          onClickPodcast={this.props.onClickPodcast}
-                          loggedIn={this.props.loggedIn}/>
-                        <button className='delete-button' onClick={this.onDelete.bind(this, podcast, itr)}>Delete</button>
-                        </div>
-                      );
-                    })
-                  }
+        <div className="podRow">
+          <div className="gridListContainer" >
+            <div className="gridListStructure">
+              {
+                this.props.favPodcasts.map((podcast, itr) => {
+                  return (
+                    <div key={itr}>
+                      <PodcastListEntry
+                        podcast={podcast}
+                        getFavorites={this.props.getFavorites}
+                        onFavorite={this.props.onFavorite}
+                        onClickPodcast={this.props.onClickPodcast}
+                        loggedIn={this.props.loggedIn}
+                        onDelete={this.onDelete}/>
+                      {/*<button className='delete-button' onClick={this.onDelete.bind(this, podcast, itr)}>Delete</button>*/}
+                    </div>
+                  )
+                })
+              }
               </div>
           </div>
-          : null
-        }
-      </div>
+        </div>
     );
   }
 }
 
 FavoritePodcasts.propTypes = {
   favPodcasts: PropTypes.array,
-  getFavPodcasts: PropTypes.func.isRequired,
+  getFavorites: PropTypes.func.isRequired,
   onClickPodcast: PropTypes.func.isRequired,
   loggedIn: PropTypes.string.isRequired
 };
