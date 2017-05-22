@@ -9,17 +9,16 @@ const PodcastMain = (props) => {
   return (
     <div className='main-container'>
       
-      {props.categories.map((category) => {
+      {props.categories.map((category, itr) => {
         return (
-
-        <PodcastList
-          podcasts={ props[category[0]] }
-          category = {category[1]}
-          onClickPodcast={props.onClickPodcast } 
-          currentPodcastView={props.currentPodcastView}
-          loggedIn={ props.loggedIn } />
-        
-          )
+          <div key={itr}>
+            <PodcastList
+              podcasts={ props[category[0]] }
+              category = {category[1]}
+              onClickPodcast={props.onClickPodcast } 
+              currentPodcastView={props.currentPodcastView}
+              loggedIn={ props.loggedIn } />
+          </div>)
       })}
 
     </div>

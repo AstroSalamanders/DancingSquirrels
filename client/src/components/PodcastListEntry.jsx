@@ -13,25 +13,7 @@ class PodcastListEntry extends React.Component {
     super(props);
 
     this.onClickPodcast = this.onClickPodcast.bind(this);
-    // this.onFavorite = this.onFavorite.bind(this);
-    // let hashArr = window.location.hash.split('/');
-    // this.username = hashArr[hashArr.length - 1];
-
-
-  }
-
-  onFavorite() {
-    // console.log(hashArr[hashArr.length - 1]);
-    $.post('/favorite', {
-      username: this.username,
-      feedUrl: this.props.podcast.feedUrl,
-      collectionId: this.props.podcast.collectionId,
-      artworkUrl100: this.props.podcast.artworkUrl100,
-      artworkUrl600: this.props.podcast.artworkUrl600,
-      collectionName: this.props.podcast.collectionName,
-      artistName: this.props.podcast.artistName
-    })
-      .done(result => console.log(result));
+    this.username = window.location.pathname.substr(1);
   }
 
   onClickPodcast() {
@@ -43,41 +25,46 @@ class PodcastListEntry extends React.Component {
   }
 
   render() {
-    var context = this;
+    var starColor = "#333";
     return ( 
 
-              <div className="tileContainer">
+      <div className="tileContainer">
 
-                  <div className="tile"
-                        onClick={ () => this.onClickPodcast(this.props.podcast) }
-                        key={this.props.podcast.artworkUrl600} >
-                    
-                    {/*{ console.log("IS LOGGED IN",this.props.loggedIn)}*/}
+          <div className="tile"
+                onClick={ () => this.onClickPodcast(this.props.podcast) }
+                key={this.props.podcast.artworkUrl600} >
+            
+            <img className="tileImg" 
+                  src={this.props.podcast.artworkUrl600} />
 
-                    <img className="tileImg" 
-                         src={this.props.podcast.artworkUrl600} />
+          </div>
 
-                  </div>
+          <div className="tileInfo">
 
-                  <div className="tileInfo">
-
-                    { this.props.loggedIn ? 
-                      <MUI>
-                        <IconButton 
-                          className="favBtn"
-                          onClick={ () => this.onFavorite(this.props.podcast) }> 
-                          <StarBorder color="#333" /> 
-                        </IconButton>
-                      </MUI> 
-                      : null 
+            { this.props.loggedIn ? 
+              <MUI>
+                <IconButton 
+                  className="favBtn"
+                  onClick={ () => {
+                    if (this.props.onDelete) {
+                      this.props.onDelete(this.props.podcast);
                     }
+                    else {
+                      this.props.onFavorite(this.props.podcast);
+                    }
+                  }}> 
+                  <StarBorder color={this.props.onDelete? "yellow" : "#333"}/> 
+                </IconButton>
+              </MUI> 
+              : null 
+            }
 
-                    <p className="podTitle">{ this.props.podcast.collectionName }</p>
-                    <em className="podGenre">{ this.props.podcast.primaryGenreName }</em>
+            <p className="podTitle">{ this.props.podcast.collectionName }</p>
+            <em className="podGenre">{ this.props.podcast.primaryGenreName }</em>
 
-                  </div>
-                    
-              </div> )
+          </div>
+            
+      </div> )
         
          {/*return (
           <GridTile
