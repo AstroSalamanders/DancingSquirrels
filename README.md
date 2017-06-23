@@ -3,7 +3,10 @@
 > Find podcasts and play them!
 
 ## Team
-
+  - Jack
+  - Kriz Cortés
+  - Andrew Bedford-Hart
+  - Alexander Liang
   - Ming Feng
   - Lavanya Chandrashekara
   - Salih Abuelyaman
